@@ -1,1 +1,3 @@
-export * from './atoms';
+export * from './LoadingSpinner';
+export * from './Header';
+export * from './HabitDay';
