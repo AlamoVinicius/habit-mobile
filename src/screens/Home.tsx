@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 import { generateDatesFromStartYear } from '../utils/generate-dates-from-init-year';
 
@@ -10,9 +11,10 @@ const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
 const datesFromYearStart = generateDatesFromStartYear();
 const minimumSumaryDateSizes = 18 * 5;
 const amountOfDaysTofill = minimumSumaryDateSizes - datesFromYearStart.length;
-// console.log(datesFromYearStart.length);
 
 export const Home = () => {
+  const { navigate } = useNavigation();
+
   return (
     <View className="flex-1 bg-background px-8 pt-16">
       <Header />
@@ -32,11 +34,12 @@ export const Home = () => {
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
         <View className="flex-row flex-wrap">
           {datesFromYearStart.map((date) => (
-            <HabitDay key={date.getTime()} />
+            <HabitDay key={date.getTime()} onPress={() => navigate('Habit', { date: date.toISOString() })} />
           ))}
           {amountOfDaysTofill > 0 &&
             Array.from({ length: amountOfDaysTofill }).map((_, index) => (
               <View
+                key={index}
                 className="bg-zinc-900 rounded-lg border-2 m-1 border-zinc-800 opacity-40"
                 style={{ width: day_size, height: day_size }}
               />
